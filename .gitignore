@@ -1,0 +1,40 @@
+# Ambientes Virtuais
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Variáveis de Ambiente e Segredos (PROIBIDO VERSIONAR)
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.cert
+*.pfx
+secrets.json
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs e Banco de dados temporários
+*.log
+*.sqlite3
+*.db
+
+# Configurações de IDEs e Editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+# Documentos e PDFs de especificações
+*.pdf
+
