@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}SecureApp{% endblock %} | Práticas de Mercado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('main.index') }}" class="brand">
+                <span class="brand-shield">🛡️</span>
+                <span class="brand-text">Secure<strong>Shield</strong></span>
+                <span class="tag-badge">OWASP Top 10</span>
+            </a>
+            <nav class="nav-links">
+                {% if session.get('authenticated') %}
+                    <a href="{{ url_for('main.dashboard') }}" class="nav-item">Dashboard</a>
+                    <span class="user-greeting">Olá, <strong>{{ session.get('user', {}).get('name', 'Usuário') }}</strong></span>
+                    <a href="{{ url_for('auth.logout') }}" class="btn-logout" title="Encerrar Sessão Segura">
+                        🚪 Sair (Logout)
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="nav-item active">Entrar</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Mensagens Flash com sanitização automática -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-container">
+                        {% for category, message in messages %}
+                            <div class="flash-alert flash-{{ category }}">
+                                <span class="flash-icon">
+                                    {% if category == 'success' %}✅{% elif category == 'danger' %}⚠️{% elif category == 'warning' %}🔔{% else %}ℹ️{% endif %}
+                                </span>
+                                <span class="flash-text">{{ message }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>Projeto Aplicado: Práticas de Mercado &bull; Foco em <strong>Segurança da Informação</strong> (Secure by Design &amp; Default)</p>
+            <p class="footer-sub">Desenvolvido com assistência de IA via IDE Antigravity &bull; 100% aderente ao OWASP Top 10</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

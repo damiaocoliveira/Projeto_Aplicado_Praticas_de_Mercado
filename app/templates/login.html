@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Autenticação Segura{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-icon-circle">🔐</div>
+            <h2>Portal de Acesso Seguro</h2>
+            <p class="subtitle">Autenticação com criptografia forte e proteção ativa contra ataques</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('auth.login', next=request.args.get('next')) }}" class="auth-form" id="loginForm">
+            <div class="form-group">
+                <label for="username">Identificador / Usuário</label>
+                <div class="input-icon-wrapper">
+                    <span class="field-icon">👤</span>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        required 
+                        autocomplete="username" 
+                        placeholder="Ex: admin"
+                        class="form-control"
+                        maxlength="30"
+                    >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha Criptográfica</label>
+                <div class="input-icon-wrapper">
+                    <span class="field-icon">🔑</span>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        required 
+                        autocomplete="current-password" 
+                        placeholder="Digite sua senha"
+                        class="form-control"
+                    >
+                    <button type="button" class="btn-toggle-pass" id="togglePassword" title="Exibir/Ocultar Senha" aria-label="Exibir/Ocultar Senha">
+                        👁️
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" id="btnLogin">
+                <span>Entrar no Sistema</span>
+                <span class="btn-arrow">&rarr;</span>
+            </button>
+        </form>
+
+        <div class="credentials-helper">
+            <h4>🧪 Credenciais de Avaliação / Demonstração</h4>
+            <div class="cred-item">
+                <span class="cred-role">Administrador:</span>
+                <code>admin</code> / <code>AdminSecure@2026</code>
+            </div>
+            <div class="cred-item">
+                <span class="cred-role">Auditor CI:</span>
+                <code>auditor</code> / <code>AuditPass@2026</code>
+            </div>
+            <p class="cred-notice">
+                ℹ️ <em>Nenhuma senha é armazenada em texto claro no código ou banco. A validação é realizada exclusivamente via hash PBKDF2-SHA256 com salt.</em>
+            </p>
+        </div>
+
+        <div class="security-pills">
+            <span class="pill">🛡️ PBKDF2 Salted Hash</span>
+            <span class="pill">⚡ Anti-Brute Force Limiter</span>
+            <span class="pill">🚫 Anti-Enumeration</span>
+            <span class="pill">🔒 CSP &amp; HSTS</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

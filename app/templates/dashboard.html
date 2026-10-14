@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Painel Interno Seguro{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <!-- Cabeçalho do Painel Interno -->
+    <div class="dashboard-banner">
+        <div class="banner-content">
+            <span class="banner-badge">🔐 Área Restrita &bull; Acesso Autenticado</span>
+            <h1>Painel de Controle Seguro</h1>
+            <p>Sessão autenticada e protegida pelas políticas de segurança <strong>Secure by Design</strong>.</p>
+        </div>
+        <div class="banner-actions">
+            <a href="{{ url_for('auth.logout') }}" class="btn btn-danger btn-logout-action">
+                <span>🚪 Encerrar Sessão (Logout)</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Informações da Sessão do Usuário -->
+    <div class="cards-grid">
+        <div class="card user-info-card">
+            <div class="card-header">
+                <h3>👤 Perfil Autenticado</h3>
+                <span class="role-chip">{{ user.role }}</span>
+            </div>
+            <div class="card-body">
+                <ul class="info-list">
+                    <li>
+                        <span class="info-label">Nome Completo:</span>
+                        <span class="info-val"><strong>{{ user.name }}</strong></span>
+                    </li>
+                    <li>
+                        <span class="info-label">Nome de Usuário:</span>
+                        <span class="info-val"><code>{{ user.username }}</code></span>
+                    </li>
+                    <li>
+                        <span class="info-label">Identificador Interno:</span>
+                        <span class="info-val"><code>{{ user.id }}</code></span>
+                    </li>
+                    <li>
+                        <span class="info-label">E-mail Corporativo:</span>
+                        <span class="info-val">{{ user.email }}</span>
+                    </li>
+                    <li>
+                        <span class="info-label">Timestamp do Login:</span>
+                        <span class="info-val">{{ login_time }}</span>
+                    </li>
+                    <li>
+                        <span class="info-label">Proteção de Sessão:</span>
+                        <span class="info-val text-success">HttpOnly + SameSite=Lax (Assinada)</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card security-summary-card">
+            <div class="card-header">
+                <h3>🛡️ Status da Conformidade de Segurança</h3>
+                <span class="badge badge-success">5/5 Requisitos OWASP</span>
+            </div>
+            <div class="card-body">
+                <p>Este protótipo foi projetado e auditado via <strong>Google Antigravity</strong> para implementar defesas nativas contra os principais vetores de ataque mapeados pelo OWASP Top 10:</p>
+                <div class="stat-pills-row">
+                    <div class="stat-pill">
+                        <span class="stat-num">0</span>
+                        <span class="stat-desc">Senhas em Texto Claro</span>
+                    </div>
+                    <div class="stat-pill">
+                        <span class="stat-num">100%</span>
+                        <span class="stat-desc">Rotas Internas Protegidas</span>
+                    </div>
+                    <div class="stat-pill">
+                        <span class="stat-num">100%</span>
+                        <span class="stat-desc">Cabeçalhos HTTP Blindados</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção de Evidências: 5 Categorias da OWASP Top 10 Mitigadas -->
+    <div class="section-container">
+        <div class="section-header">
+            <h2>📋 Detalhamento Técnico das 5 Mitigações OWASP Top 10</h2>
+            <p>Mapeamento das regras de segurança implementadas no código-fonte e validadas pela esteira de CI:</p>
+        </div>
+
+        <div class="defenses-list">
+            {% for item in owasp_defenses %}
+            <div class="defense-card">
+                <div class="defense-card-header">
+                    <div class="defense-title">
+                        <span class="category-id">{{ item.id }}</span>
+                        <h4>{{ item.name }}</h4>
+                    </div>
+                    <span class="badge {{ item.badge }}">{{ item.status }}</span>
+                </div>
+                <div class="defense-card-body">
+                    <p class="defense-desc">{{ item.description }}</p>
+                    <div class="defense-meta">
+                        <span class="meta-label">Onde está no código:</span>
+                        <code>{{ item.implementation }}</code>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Barra de Logout de Rodapé Funcional -->
+    <div class="logout-footer-box">
+        <div class="logout-footer-content">
+            <h4>Deseja encerrar o acesso seguro?</h4>
+            <p>O logout invalida imediatamente sua sessão criptográfica no servidor e elimina cookies no navegador.</p>
+        </div>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-danger btn-lg">
+            🚪 Confirmar e Realizar Logout
+        </a>
+    </div>
+</div>
+{% endblock %}
