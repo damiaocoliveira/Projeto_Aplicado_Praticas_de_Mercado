@@ -1,6 +1,6 @@
 # Dependências de Desenvolvimento, Testes e Segurança (SAST)
 -r requirements.txt
 pytest>=9.1.1
-bandit>=1.8.0
+bandit>=1.9.4
 flake8>=7.4.1
 pip-audit>=2.7.0
