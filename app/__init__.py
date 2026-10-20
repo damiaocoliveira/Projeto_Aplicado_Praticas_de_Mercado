@@ -25,6 +25,7 @@ def create_app(test_config=None) -> Flask:
         SESSION_COOKIE_SECURE=os.environ.get("FLASK_ENV") == "production",  # Apenas HTTPS em produção
         PERMANENT_SESSION_LIFETIME=timedelta(minutes=45),                   # Expiração temporal da sessão
         MAX_CONTENT_LENGTH=1 * 1024 * 1024,  # Limita payload a 1MB (Prevenção de DoS em requisições)
+        TEMPLATES_AUTO_RELOAD=True,          # Sempre recarrega templates modificados sem cache antigo
     )
 
     if test_config:
